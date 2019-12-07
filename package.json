@@ -1,0 +1,28 @@
+{
+  "name": "karma-docker-launcher",
+  "version": "0.0.1",
+  "description": "A Karma plugin. Launcher for headless browsers in Docker containers.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc -p .",
+    "lint": "tslint -p .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "karma-plugin",
+    "karma-launcher",
+    "karma",
+    "docker",
+    "headless",
+    "browser",
+    "container",
+    "image"
+  ],
+  "author": "Michel Fugers <michelfugers@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "tslint": "^5.20.1",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {}
+}
