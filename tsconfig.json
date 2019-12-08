@@ -1,28 +1,15 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "baseUrl": "./",
-    "outDir": "./dist",
-    "sourceMap": true,
-    "declaration": false,
-    "downlevelIteration": true,
-    "experimentalDecorators": true,
-    "module": "esnext",
-    "moduleResolution": "node",
-    "strictNullChecks": true,
-    "noImplicitAny": true,
-    "importHelpers": true,
-    "target": "es2015",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
+    "module": "commonjs",
+    "target": "es5",
     "lib": [
-      "es2018",
-      "dom"
-    ]
+      "es2015"
+    ],
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "./dist"
   },
-  "angularCompilerOptions": {
-    "fullTemplateTypeCheck": true,
-    "strictInjectionParameters": true
-  }
+  "files": [
+    "src/index.ts"
+  ]
 }

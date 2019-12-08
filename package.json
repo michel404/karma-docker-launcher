@@ -21,8 +21,13 @@
   "author": "Michel Fugers <michelfugers@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^12.12.14",
     "tslint": "^5.20.1",
     "typescript": "^3.7.3"
   },
-  "dependencies": {}
+  "dependencies": {
+    "node-docker-api": "^1.1.22",
+    "rxjs": "^6.5.3",
+    "rxjs-stream": "^3.1.0"
+  }
 }

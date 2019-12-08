@@ -1,6 +1,5 @@
-export class DockerLauncher {
+import {DockerLauncher} from './launcher/docker-launcher';
 
-  constructor() {
-  }
-
-}
+module.exports = {
+  'launcher:Docker': ['type', DockerLauncher],
+};
