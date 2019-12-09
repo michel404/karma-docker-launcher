@@ -25,9 +25,11 @@ export interface Log {
 export interface KarmaLauncher {
   name: string;
 
-  start(url: string): Promise<void>;
+  start(url: string, id: string): Promise<void>;
 
   forceKill(): Promise<void>;
+
+  markCaptured(): void;
 
   isCaptured(): boolean;
 

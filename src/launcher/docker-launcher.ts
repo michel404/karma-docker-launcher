@@ -18,6 +18,7 @@ export class DockerLauncher implements KarmaLauncher {
 
   private browserProcessFailure: () => void;
   private done: () => void;
+  private captured = false;
 
   private container: Container | null = null;
 
@@ -26,7 +27,7 @@ export class DockerLauncher implements KarmaLauncher {
   private readonly imageService: ImageService;
   private readonly containerService: ContainerService;
 
-  constructor(logger: Logger, private args: Arguments) {
+  constructor(private readonly id: string, private readonly logger: Logger, private readonly args: Arguments) {
     this.validateArgs();
 
     this.log = logger.create(this.name);
@@ -40,7 +41,7 @@ export class DockerLauncher implements KarmaLauncher {
   async start(url: string) {
     this.log.debug('Received: start');
 
-    const createOptions = injectUrlInCreateOptions(url, this.args.createOptions);
+    const createOptions = injectUrlInCreateOptions(`${url}?id=${this.id}`, this.args.createOptions);
 
     await this.imageService.getImage(createOptions[IMAGE]);
     this.container = await this.containerService.startContainer(createOptions);
@@ -67,10 +68,15 @@ export class DockerLauncher implements KarmaLauncher {
     this.log.debug(`Registered callback function for '${callbackType}'`);
   }
 
-  isCaptured() {
+  markCaptured() {
     const imageId: string = this.container.data[CONFIG][IMAGE];
-    this.log.info(`The browser in '${imageId}' is successfully captured`);
-    return true;
+    this.log.info(`The browser of '${imageId}' in is successfully captured`);
+    this.captured = true;
+  }
+
+  isCaptured() {
+    this.log.debug(`Captured: ${this.captured}`);
+    return this.captured;
   }
 
   private validateArgs() {
@@ -78,7 +84,9 @@ export class DockerLauncher implements KarmaLauncher {
       this.args.socketPath = DEFAULT_SOCKET_PATH;
     }
     if (this.args.createOptions === undefined) {
-      throw Error(`Argument 'createOptions' is missing. ` +
+      throw Error(`Argument 'createOptions' is missing.\n` +
+        `You cannot run 'Docker' as browser without extra arguments in customLaunchers in karma.conf.` +
+        `Please refer to README.md for instructions and examples. \n` +
         `Check the documentation of the Docker Engine Api for '/containers/create' to ` +
         `see the available create options.`);
     }
