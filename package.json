@@ -3,10 +3,15 @@
   "version": "0.0.1",
   "description": "A Karma plugin. Launcher for headless browsers in Docker containers.",
   "main": "dist/index.js",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
     "build": "tsc -p .",
     "lint": "tslint -p .",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "karma start"
   },
   "keywords": [
     "karma-plugin",
@@ -21,7 +26,14 @@
   "author": "Michel Fugers <michelfugers@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "@types/jasmine": "^3.5.0",
     "@types/node": "^12.12.14",
+    "jasmine-core": "^3.5.0",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-coverage-istanbul-reporter": "^2.1.1",
+    "karma-jasmine": "^2.0.1",
+    "karma-typescript": "^5.0.0-beta.0",
     "tslint": "^5.20.1",
     "typescript": "^3.7.3"
   },
@@ -29,5 +41,8 @@
     "node-docker-api": "^1.1.22",
     "rxjs": "^6.5.3",
     "rxjs-stream": "^3.1.0"
+  },
+  "optionalDependencies": {
+    "fsevents": "^2.1.2"
   }
 }

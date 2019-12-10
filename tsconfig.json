@@ -2,12 +2,13 @@
   "compilerOptions": {
     "module": "commonjs",
     "target": "es5",
-    "lib": [
-      "es2015"
-    ],
     "moduleResolution": "node",
     "sourceMap": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "strict": true,
+    "skipLibCheck": true,
+    "noImplicitReturns": true,
+    "noUnusedParameters": true
   },
   "files": [
     "src/index.ts"

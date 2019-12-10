@@ -1,10 +1,14 @@
 /*
- * This file contains all the type information needed for a Karma Launcher. Due to a lack of
- * official typings, these types and interfaced can be used. They are based on how Karma appears
- * to be working, and are almost certainly incomplete or incorrect.
+ * This file contains all the type information needed for a Karma Launcher, and Docker. Due to a
+ * lack of official typings, these types and interfaced can be used.
  *
- * If ever Karma releases official typings it is best to replace these with those.
+ * They are based on how Karma and Docker appears to be working, and are almost certainly incomplete
+ * or incorrect.
+ *
+ * If ever Karma or Docker release official typings it is best to replace these with those.
  */
+
+/* Karma */
 
 export type CallbackType = 'browser_process_failure' | 'done';
 
@@ -34,4 +38,15 @@ export interface KarmaLauncher {
   isCaptured(): boolean;
 
   on(callbackType: CallbackType, callbackFunction: () => void): void;
+}
+
+/* Docker Engine API */
+
+export interface ContainerData {
+  Name: string;
+  Config: CreateOptions;
+}
+
+export interface CreateOptions {
+  Image: string;
 }

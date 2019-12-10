@@ -1,23 +1,22 @@
 import {Docker} from 'node-docker-api';
 import {Container} from 'node-docker-api/lib/container';
 import {Arguments} from './arguments';
-import {CONFIG, IMAGE} from './docker-constants';
-import {CallbackType, KarmaLauncher, Log, Logger} from './missing-types';
+import {CallbackType, ContainerData, CreateOptions, KarmaLauncher, Log, Logger} from './missing-types';
 import {ContainerService} from './services/container-service';
 import {ImageService} from './services/image-service';
 
 const KARMA_URL_CONST = '$KARMA_URL';
 const DEFAULT_SOCKET_PATH = '/var/run/docker.sock';
 
-function injectUrlInCreateOptions(url: string, createOptions: object) {
-  return JSON.parse(JSON.stringify(createOptions).replace(KARMA_URL_CONST, url)) as object;
+function injectUrlInCreateOptions(url: string, createOptions: CreateOptions) {
+  return JSON.parse(JSON.stringify(createOptions).replace(KARMA_URL_CONST, url)) as CreateOptions;
 }
 
 export class DockerLauncher implements KarmaLauncher {
   readonly name = 'DockerLauncher';
 
-  private browserProcessFailure: () => void;
-  private done: () => void;
+  private browserProcessFailure: (() => void) | null = null;
+  private done: (() => void) | null = null;
   private captured = false;
 
   private container: Container | null = null;
@@ -43,7 +42,7 @@ export class DockerLauncher implements KarmaLauncher {
 
     const createOptions = injectUrlInCreateOptions(`${url}?id=${this.id}`, this.args.createOptions);
 
-    await this.imageService.getImage(createOptions[IMAGE]);
+    await this.imageService.getImage(createOptions.Image);
     this.container = await this.containerService.startContainer(createOptions);
   }
 
@@ -69,7 +68,7 @@ export class DockerLauncher implements KarmaLauncher {
   }
 
   markCaptured() {
-    const imageId: string = this.container.data[CONFIG][IMAGE];
+    const imageId: string = (this.container?.data as ContainerData)?.Config.Image || 'unknown image';
     this.log.info(`The browser of '${imageId}' in is successfully captured`);
     this.captured = true;
   }
@@ -90,7 +89,7 @@ export class DockerLauncher implements KarmaLauncher {
         `Check the documentation of the Docker Engine Api for '/containers/create' to ` +
         `see the available create options.`);
     }
-    if (this.args.createOptions[IMAGE] === undefined) {
+    if (this.args.createOptions.Image === undefined) {
       throw Error(`Argument 'createOptions.Image' is missing. ` +
         `Check the documentation of the Docker Engine Api for '/containers/create' to ` +
         `see the available create options.`);
