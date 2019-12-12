@@ -37,7 +37,7 @@
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "~4.1.0",
     "karma-coverage-istanbul-reporter": "~2.0.1",
-    "karma-docker-launcher": "^0.0.2",
+    "karma-docker-launcher": "^1.0.0",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.0",
     "ts-node": "~7.0.0",
