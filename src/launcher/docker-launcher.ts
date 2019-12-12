@@ -6,7 +6,7 @@ import {ContainerService} from './services/container-service';
 import {ImageService} from './services/image-service';
 
 const KARMA_URL_CONST = '$KARMA_URL';
-const DEFAULT_SOCKET_PATH = '/var/run/docker.sock';
+
 
 function injectUrlInCreateOptions(url: string, createOptions: CreateOptions) {
   return JSON.parse(JSON.stringify(createOptions).replace(KARMA_URL_CONST, url)) as CreateOptions;
@@ -30,7 +30,7 @@ export class DockerLauncher implements KarmaLauncher {
     this.validateArgs();
 
     this.log = logger.create(this.name);
-    this.docker = new Docker({socketPath: this.args.socketPath});
+    this.docker = new Docker(this.args.modemOptions);
     this.imageService = new ImageService(this.log, this.docker);
     this.containerService = new ContainerService(this.log, this.docker);
 
@@ -79,8 +79,8 @@ export class DockerLauncher implements KarmaLauncher {
   }
 
   private validateArgs() {
-    if (this.args.socketPath === undefined) {
-      this.args.socketPath = DEFAULT_SOCKET_PATH;
+    if (this.args.modemOptions === undefined) {
+      this.args.modemOptions = {};
     }
     if (this.args.createOptions === undefined) {
       throw Error(`Argument 'createOptions' is missing.\n` +

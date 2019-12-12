@@ -34,6 +34,9 @@ describe('DockerLauncher', () => {
     stopContainer: () => {
     },
   };
+  const doneCallbackField = 'done';
+  const browserProcessFailureCallbackField = 'browserProcessFailure';
+  const argumentsField = 'args';
 
   let dockerSpy: jasmine.Spy;
   let imageServiceSpy: jasmine.Spy;
@@ -48,7 +51,9 @@ describe('DockerLauncher', () => {
 
   describe('when constructing', () => {
     const args = {
-      socketPath: 'my-socket-path',
+      modemOptions: {
+        socketPath: 'my-socket-path',
+      },
       createOptions: {
         Image: 'hello-world',
         Env: ['URL=$KARMA_URL'],
@@ -73,7 +78,7 @@ describe('DockerLauncher', () => {
       dockerLauncher.on('done', done);
 
       expect(done).not.toHaveBeenCalled();
-      dockerLauncher['done']?.call({});
+      dockerLauncher[doneCallbackField]?.call({});
       expect(done).toHaveBeenCalled();
     });
 
@@ -83,7 +88,7 @@ describe('DockerLauncher', () => {
       dockerLauncher.on('browser_process_failure', browserProcessFailure);
 
       expect(browserProcessFailure).not.toHaveBeenCalled();
-      dockerLauncher['browserProcessFailure']?.call({});
+      dockerLauncher[browserProcessFailureCallbackField]?.call({});
       expect(browserProcessFailure).toHaveBeenCalled();
     });
 
@@ -158,8 +163,8 @@ describe('DockerLauncher', () => {
 
   });
 
-  describe('when socketPath is missing', () => {
-    const args: Arguments = {createOptions: {Image: 'hello-world'}};
+  describe('when modemOptions is missing', () => {
+    const args = {createOptions: {Image: 'hello-world'}} as Arguments;
     let dockerLauncher: DockerLauncher;
 
     beforeEach(() => {
@@ -167,7 +172,7 @@ describe('DockerLauncher', () => {
     });
 
     it('should provide a default value', () => {
-      expect(dockerLauncher['args'].socketPath).toBeDefined();
+      expect(dockerLauncher[argumentsField].modemOptions).toBeDefined();
     });
 
   });
