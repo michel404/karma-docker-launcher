@@ -8,10 +8,14 @@
   ],
   "scripts": {
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
+    "prepublishOnly": "npm run lint && npm test",
     "build": "tsc -p .",
     "lint": "tslint -p .",
     "test": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/michel404/karma-docker-launcher.git"
   },
   "keywords": [
     "karma-plugin",
