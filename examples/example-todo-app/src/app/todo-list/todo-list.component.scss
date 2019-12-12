@@ -1,0 +1,17 @@
+.done {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.spacer {
+  flex-grow: 1;
+}
+
+.delete {
+  display: none;
+  color: silver;
+}
+
+mat-list-item:hover .delete {
+  display: block;
+}

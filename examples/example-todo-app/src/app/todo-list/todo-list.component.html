@@ -1,0 +1,30 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ title }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <mat-list role="list">
+      <ng-container *ngIf="todos.length > 0; else noTodos">
+        <mat-list-item *ngFor="let todo of todos" role="listitem">
+          <mat-checkbox [(ngModel)]="todo.done" [class.done]="todo.done">
+            {{ todo.label }}
+          </mat-checkbox> &nbsp;
+          <span class="spacer"></span>
+          <button (click)="deleteTodo(todo)" class="delete" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </mat-list-item>
+        <p *ngIf="allDone()">
+          <mat-icon>done_all</mat-icon>
+          You are all done!
+        </p>
+      </ng-container>
+      <ng-template #noTodos>
+        There is nothing to do. Add your next to-do via the button below.
+      </ng-template>
+    </mat-list>
+  </mat-card-content>
+  <mat-card-actions>
+    <button (click)="addTodo()" color="primary" mat-raised-button>Add new item</button>
+  </mat-card-actions>
+</mat-card>

@@ -20,7 +20,8 @@ module.exports = function (config) {
     autoWatch: false,
     browsers: [
       /* In order to avoid a circular dependency, this project itself uses the regular old ChromeHeadless
-         browser for unit tests. */
+         browser for unit tests. Please see the example app to see an example of karma.conf.js that uses the
+         karma-docker-launcher. */
       'ChromeHeadless'
     ],
     singleRun: true,

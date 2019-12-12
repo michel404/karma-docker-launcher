@@ -48,8 +48,9 @@ export class DockerLauncher implements KarmaLauncher {
 
   async forceKill() {
     this.log.debug('Received: force kill');
-
-    this.container = await this.containerService.stopContainer(this.container);
+    const container = this.container;
+    this.container = null;
+    await this.containerService.stopContainer(container);
   }
 
   on(callbackType: CallbackType, callbackFunction: () => void) {
