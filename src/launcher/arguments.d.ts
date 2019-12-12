@@ -1,6 +1,6 @@
-import {CreateOptions} from './missing-types';
+import {CreateOptions, ModemOptions} from './missing-types';
 
 export interface Arguments {
-  socketPath?: string;
+  modemOptions: ModemOptions;
   createOptions: CreateOptions;
 }

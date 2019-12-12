@@ -42,6 +42,10 @@ export interface KarmaLauncher {
 
 /* Docker Engine API */
 
+export interface ModemOptions {
+  socketPath?: string;
+}
+
 export interface ContainerData {
   Name: string;
   Config: CreateOptions;
