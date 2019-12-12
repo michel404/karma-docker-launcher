@@ -2,9 +2,7 @@
 ![GitHub Actions build status
 ](https://github.com/michel404/karma-docker-launcher/workflows/build/badge.svg?branch=master)
 
-A Karma plugin. Launcher for headless browsers in Docker containers.
-
-> Run your Karma tests on a headless browser in a Docker container.
+> A Karma plugin. Launcher for headless browsers in Docker containers.
 
 ## Why?
 
@@ -14,11 +12,12 @@ location. It is more convenient to run your headless browsers in a Docker
 container, especially during automated builds. This package allows you to do
 just that.
 
-It uses the Docker Engine API, so it can even run without Docker binary,
-which is useful when Karma itself is running inside a node container.
+This package uses the Docker Engine API, so it can even run without Docker
+binary, which is useful when Karma itself is running inside a node container.
+It is easily configurable for testing in Chrome, Firefox or any other browser
+that runs inside a Docker container.  
 
-This package is easily configurable for testing in Chrome, Firefox or any
-other browser that runs inside a Docker container.  
+> Run your Karma tests on a headless browser in a Docker container.
 
 ## Installation
 The easiest way is to keep `karma-docker-launcher` as a devDependency in your
@@ -68,14 +67,18 @@ module.exports = function (config) {
 };
 ```
 
+* Each image you want to run has to be configured in `customLaunchers`, where
+`base` is `Docker`.
+
 * `modemOptions` is specified by the `docker-modem` package. Please refer to
-[their REAMDE.md](https://github.com/apocas/docker-modem#getting-started)
-to see the available options. 
+[its REAMDE.md](https://github.com/apocas/docker-modem#getting-started)
+to see the available options. Most applications only need `socketPath:
+'/var/run/docker.sock'`. 
 
 * `createOptions` is specified by de Docker Engine API. Only `Image` is
-required. Please refer to [the official Docker docs
+required. Refer to [the official Docker docs
 ](https://docs.docker.com/engine/api/v1.30/#operation/ContainerCreate) to
-see all available options.   
+see all available options. Please mind the capitalisation of the keys. 
 
 * All occurrences of `$KARMA_URL` will be replaced by the actual url provided
 by Karma; typically `http://localhost:9876/?id=1234`.
@@ -84,9 +87,9 @@ by Karma; typically `http://localhost:9876/?id=1234`.
 
 Running Karma can be done in two ways:
 
-* Directly, e.g. using `npm run test`.
+1. Directly, e.g. using `npm run test`.
 
-* In a docker container, e.g. using `docker run (...) node npm run test`.
+2. In a Docker container, e.g. using `docker run (...) node npm run test`.
 
 ## Examples
 
@@ -101,7 +104,7 @@ This package differs from
 [karma-chrome-launcher](https://www.npmjs.com/package/karma-chrome-launcher) and
 [karma-firefox-launcher](https://www.npmjs.com/package/karma-firefox-launcher)
 in one important way. The Chrome and Firefox launchers need the binaries to be
-installed locally, while this package only needs a Docker daemon to talk to. 
+installed locally, whereas this package only needs a Docker daemon to talk to. 
 
 This package is inspired by
 [@rkuzsma/karma-docker-launcher
